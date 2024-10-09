@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { exists, existsSync, unlinkSync } from 'fs';
+import { existsSync, unlinkSync } from 'fs';
 
 async function bootstrap() {
   const dbFile = 'db.sqlite';
