@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("planets")
 export class Planet {
@@ -7,17 +7,23 @@ export class Planet {
     id: number;
 
     @Index()
-    @Column()
+    @Column({ nullable: false })
     name: string;
 
-    @Column()
+    @Column({ nullable: false })
     climate: string;
 
-    @Column()
+    @Column({ nullable: false })
     terrain: string;
 
-    @Column()
+    @Column({ nullable: false })
     population: number;
+
+    @CreateDateColumn({name: 'created_at', nullable: false })
+    createdAt: Date;
+
+    @UpdateDateColumn({name: 'updated_at', nullable: false })
+    updatedAt: Date;
 
     @BeforeInsert()
     nameCapitalize(){
