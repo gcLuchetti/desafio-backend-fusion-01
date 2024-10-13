@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
 import { PlanetsService } from './planets.service';
 import { CreatePlanetDto } from './dto/create-planet.dto';
 import { UpdatePlanetDto } from './dto/update-planet.dto';
@@ -8,27 +8,28 @@ export class PlanetsController {
   constructor(private readonly planetsService: PlanetsService) {}
 
   @Post()
-  create(@Body() createPlanetDto: CreatePlanetDto) {
-    return this.planetsService.create(createPlanetDto);
+  async create(@Body() createPlanetDto: CreatePlanetDto) {
+    return await this.planetsService.create(createPlanetDto);
   }
 
   @Get()
-  findAll() {
-    return this.planetsService.findAll();
+  async findAll() {
+    return await this.planetsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.planetsService.findOne(+id);
+  async findOne(@Param('id', new ParseIntPipe()) id: string) {
+    return await this.planetsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlanetDto: UpdatePlanetDto) {
-    return this.planetsService.update(+id, updatePlanetDto);
+  async update(@Param('id', new ParseIntPipe()) id: string, @Body() updatePlanetDto: UpdatePlanetDto) {
+    return await this.planetsService.update(+id, updatePlanetDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.planetsService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id', new ParseIntPipe()) id: string) {
+    return await this.planetsService.remove(+id);
   }
 }
