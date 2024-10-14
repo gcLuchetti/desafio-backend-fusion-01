@@ -19,17 +19,17 @@ export class PlanetsController {
 
   @Get(':id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return await this.planetsService.findOne(+id);
+    return await this.planetsService.findOneByOrFail(id);
   }
 
   @Patch(':id')
   async update(@Param('id', new ParseIntPipe()) id: number, @Body() updatePlanetDto: UpdatePlanetDto) {
-    return await this.planetsService.update(+id, updatePlanetDto);
+    return await this.planetsService.update(id, updatePlanetDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', new ParseIntPipe()) id: number) {
-    return await this.planetsService.remove(+id);
+    return await this.planetsService.remove(id);
   }
 }
