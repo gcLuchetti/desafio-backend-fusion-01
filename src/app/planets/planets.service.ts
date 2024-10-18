@@ -10,11 +10,13 @@ import { PlanetNotFoundException } from './exceptions/planet-not-found.exception
 export class PlanetsService {
   constructor(
     @InjectRepository(Planet)
-    private readonly planetRepository: Repository<Planet>
-  ){}
+    private readonly planetRepository: Repository<Planet>,
+  ) {}
 
   async create(createPlanetDto: CreatePlanetDto) {
-    return await this.planetRepository.save(this.planetRepository.create(createPlanetDto));
+    return await this.planetRepository.save(
+      this.planetRepository.create(createPlanetDto),
+    );
   }
 
   async findAll() {
@@ -23,7 +25,7 @@ export class PlanetsService {
 
   async findOneByOrFail(id: number) {
     try {
-        return await this.planetRepository.findOneByOrFail({id: id});
+      return await this.planetRepository.findOneByOrFail({ id: id });
     } catch (error) {
       if (error instanceof EntityNotFoundError)
         throw new PlanetNotFoundException(id);
@@ -42,6 +44,6 @@ export class PlanetsService {
   async remove(id: number) {
     await this.findOneByOrFail(id);
 
-    await this.planetRepository.delete({id: id})
+    await this.planetRepository.delete({ id: id });
   }
 }

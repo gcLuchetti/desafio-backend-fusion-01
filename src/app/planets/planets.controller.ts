@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { PlanetsService } from './planets.service';
 import { CreatePlanetDto } from './dto/create-planet.dto';
 import { UpdatePlanetDto } from './dto/update-planet.dto';
@@ -23,7 +34,10 @@ export class PlanetsController {
   }
 
   @Patch(':id')
-  async update(@Param('id', new ParseIntPipe()) id: number, @Body() updatePlanetDto: UpdatePlanetDto) {
+  async update(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() updatePlanetDto: UpdatePlanetDto,
+  ) {
     return await this.planetsService.update(id, updatePlanetDto);
   }
 

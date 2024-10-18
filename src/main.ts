@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const dbFile = 'db.sqlite';
-  if(existsSync(dbFile)) unlinkSync(dbFile);
+  if (existsSync(dbFile)) unlinkSync(dbFile);
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
