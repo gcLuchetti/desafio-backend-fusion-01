@@ -24,27 +24,42 @@ export class UsersService {
     });
   }
 
-  async findOneByOrFail(id: number) {
+  async findOneByIdOrFail(id: number) {
     try {
-      return await this.usersRepository.findOneByOrFail({ id: id });
+      return await this.usersRepository.findOneByOrFail({ id });
     } catch (error) {
-      if (error instanceof EntityNotFoundError)
-        throw new UserNotFoundException(id);
+      if (error instanceof EntityNotFoundError){
+        const message: string = `User with ID ${id} not found`;
+        throw new UserNotFoundException(message);
+      }
 
       throw new NotFoundException(error.message);
     }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user: User = await this.findOneByOrFail(id);
+    const user: User = await this.findOneByIdOrFail(id);
     this.usersRepository.merge(user, updateUserDto);
 
     return await this.usersRepository.save(user);
   }
 
   async remove(id: number) {
-    await this.findOneByOrFail(id);
+    await this.findOneByIdOrFail(id);
 
     await this.usersRepository.delete({ id: id });
+  }
+
+  async findOneByEmailOrFail(email: string){
+    try {
+      return await this.usersRepository.findOneByOrFail({ email });
+    } catch (error) {
+      if (error instanceof EntityNotFoundError){
+        const message: string = `User with email ${email} not found`;
+        throw new UserNotFoundException(message);
+      }
+
+      throw new NotFoundException(error.message);
+    }
   }
 }
