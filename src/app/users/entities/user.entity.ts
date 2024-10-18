@@ -1,11 +1,15 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
+  Entity,
   Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { hashSync } from 'bcrypt';
 
+@Entity('users')
 export class User {
   @Index()
   @PrimaryGeneratedColumn()
@@ -29,4 +33,9 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @BeforeInsert()
+  hashPassword() {
+    this.password = hashSync(this.password, 10);
+  }
 }
