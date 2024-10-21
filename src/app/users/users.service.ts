@@ -28,7 +28,7 @@ export class UsersService {
     try {
       return await this.usersRepository.findOneByOrFail({ id });
     } catch (error) {
-      if (error instanceof EntityNotFoundError){
+      if (error instanceof EntityNotFoundError) {
         const message: string = `User with ID ${id} not found`;
         throw new UserNotFoundException(message);
       }
@@ -50,11 +50,11 @@ export class UsersService {
     await this.usersRepository.delete({ id: id });
   }
 
-  async findOneByEmailOrFail(email: string){
+  async findOneByEmailOrFail(email: string) {
     try {
       return await this.usersRepository.findOneByOrFail({ email });
     } catch (error) {
-      if (error instanceof EntityNotFoundError){
+      if (error instanceof EntityNotFoundError) {
         const message: string = `User with email ${email} not found`;
         throw new UserNotFoundException(message);
       }
