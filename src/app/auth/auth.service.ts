@@ -6,6 +6,7 @@ import { compareSync } from 'bcrypt';
 import { SignInAuthDto } from './dto/sign-in-auth.dto';
 import { ResultAuthDto } from './dto/result-auth.dto';
 import { JwtService } from '@nestjs/jwt';
+import { MessageHelper } from './helpers/message.helper';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,8 @@ export class AuthService {
   async authenticate(input: InputAuthDto): Promise<ResultAuthDto> {
     const user: SignInAuthDto = await this.validateUser(input);
 
-    if (!user) throw new UnauthorizedException();
+    if (!user)
+      throw new UnauthorizedException(MessageHelper.invalidEmailOrPassword);
 
     const authenticatedUser: ResultAuthDto = await this.signIn(user);
 
@@ -25,12 +27,19 @@ export class AuthService {
   }
 
   async validateUser(input: InputAuthDto): Promise<SignInAuthDto | null> {
-    const user: User = await this.usersService.findOneByEmailOrFail(
-      input.email,
-    );
+    let user: User;
+    try {
+      user = await this.usersService.findOneByEmailOrFail(input.email);
+    } catch (error) {
+      const msMax = 75;
+      const msMin = 60;
+      const ms = Math.floor(Math.random() * (msMax - msMin) + msMin);
+      await new Promise((resolve) => setTimeout(resolve, ms)); //Timing Attack "fix"
+      return null;
+    }
 
     const isMatch = await compareSync(input.password, user.password);
-    if (user && isMatch) {
+    if (isMatch) {
       const validatedUser: SignInAuthDto = {
         userId: user.id,
         email: user.email,
