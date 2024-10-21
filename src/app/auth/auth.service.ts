@@ -5,21 +5,21 @@ import { User } from '../users/entities/user.entity';
 import { compareSync } from 'bcrypt';
 import { SignInAuthDto } from './dto/sign-in-auth.dto';
 import { ResultAuthDto } from './dto/result-auth.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async authenticate(input: InputAuthDto): Promise<ResultAuthDto> {
     const user: SignInAuthDto = await this.validateUser(input);
 
     if (!user) throw new UnauthorizedException();
 
-    const authenticatedUser: ResultAuthDto = {
-      accessToken: 'fake-access',
-      userId: user.userId,
-      email: user.email,
-    };
+    const authenticatedUser: ResultAuthDto = await this.signIn(user);
 
     return authenticatedUser;
   }
@@ -39,5 +39,22 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  async signIn(user: SignInAuthDto): Promise<ResultAuthDto> {
+    const tokenPayload = {
+      sub: user.userId,
+      email: user.email,
+    };
+
+    const accessToken = await this.jwtService.signAsync(tokenPayload);
+
+    const signInAccess: ResultAuthDto = {
+      accessToken: accessToken,
+      userId: user.userId,
+      email: user.email,
+    };
+
+    return signInAccess;
   }
 }
