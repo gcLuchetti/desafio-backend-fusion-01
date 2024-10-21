@@ -30,7 +30,7 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return await this.usersService.findOneByOrFail(id);
+    return await this.usersService.findOneByIdOrFail(id);
   }
 
   @Patch(':id')
