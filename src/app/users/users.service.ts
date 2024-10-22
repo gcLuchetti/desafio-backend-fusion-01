@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { EntityNotFoundError, Repository } from 'typeorm';
@@ -13,9 +17,16 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    return await this.usersRepository.save(
-      this.usersRepository.create(createUserDto),
-    );
+    try {
+      return await this.usersRepository.save(
+        this.usersRepository.create(createUserDto),
+      );
+    } catch (error) {
+      if (error.message.includes('UNIQUE constraint failed: users.email'))
+        throw new BadRequestException('A user with this email already exists.');
+
+      throw new BadRequestException(error.message);
+    }
   }
 
   async findAll() {
