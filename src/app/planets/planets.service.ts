@@ -23,26 +23,28 @@ export class PlanetsService {
     return await this.planetRepository.find();
   }
 
-  async findOneByOrFail(id: number) {
+  async findOneByIdOrFail(id: number) {
     try {
       return await this.planetRepository.findOneByOrFail({ id: id });
     } catch (error) {
-      if (error instanceof EntityNotFoundError)
-        throw new PlanetNotFoundException(id);
+      if (error instanceof EntityNotFoundError) {
+        const message: string = `Planet with ID ${id} not found`;
+        throw new PlanetNotFoundException(message);
+      }
 
       throw new NotFoundException(error.message);
     }
   }
 
   async update(id: number, updatePlanetDto: UpdatePlanetDto) {
-    const planet: Planet = await this.findOneByOrFail(id);
+    const planet: Planet = await this.findOneByIdOrFail(id);
 
     this.planetRepository.merge(planet, updatePlanetDto);
     return await this.planetRepository.save(planet);
   }
 
   async remove(id: number) {
-    await this.findOneByOrFail(id);
+    await this.findOneByIdOrFail(id);
 
     await this.planetRepository.delete({ id: id });
   }

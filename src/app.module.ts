@@ -4,6 +4,7 @@ import { PlanetsModule } from './app/planets/planets.module';
 import { UsersModule } from './app/users/users.module';
 import { AuthModule } from './app/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { StarSystemsModule } from './app/star-systems/star-systems.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
     PlanetsModule,
     UsersModule,
     AuthModule,
+    StarSystemsModule,
   ],
   controllers: [],
   providers: [],

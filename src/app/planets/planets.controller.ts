@@ -44,7 +44,7 @@ export class PlanetsController {
     summary: 'Retrieves information about a specific planet.',
   })
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return await this.planetsService.findOneByOrFail(id);
+    return await this.planetsService.findOneByIdOrFail(id);
   }
 
   @Patch(':id')

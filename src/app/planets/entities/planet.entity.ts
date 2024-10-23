@@ -1,9 +1,11 @@
+import { StarSystem } from 'src/app/star-systems/entities/star-system.entity';
 import {
   BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
   Index,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -26,6 +28,9 @@ export class Planet {
 
   @Column({ nullable: false })
   population: number;
+
+  @ManyToOne(() => StarSystem, (starSystem) => starSystem.planets, { nullable: true })
+  starSystem: StarSystem;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
