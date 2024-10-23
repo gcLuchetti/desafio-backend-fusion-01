@@ -5,7 +5,6 @@ import {
   Entity,
   Index,
   PrimaryGeneratedColumn,
-  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { hashSync } from 'bcrypt';
