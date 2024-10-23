@@ -14,8 +14,9 @@ export class CreatePlanetDto {
   @ApiProperty()
   terrain: string;
 
+  @IsNotEmpty()
   @IsNumber()
   @Min(0)
-  @ApiProperty({ type: [Number], })
+  @ApiProperty({ type: [Number] })
   population: number;
 }
