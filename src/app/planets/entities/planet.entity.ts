@@ -32,7 +32,8 @@ export class Planet {
   population: number;
 
   @ManyToOne(() => StarSystem, (starSystem) => starSystem.planets, {
-    nullable: true, onDelete: 'SET NULL'
+    nullable: true,
+    onDelete: 'SET NULL',
   })
   starSystem: StarSystem;
 

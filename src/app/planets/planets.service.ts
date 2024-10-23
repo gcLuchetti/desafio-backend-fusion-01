@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePlanetDto } from './dto/create-planet.dto';
 import { UpdatePlanetDto } from './dto/update-planet.dto';
 import { Planet } from './entities/planet.entity';
@@ -20,12 +24,17 @@ export class PlanetsService {
   }
 
   async findAll() {
-    return await this.planetRepository.find({relations: ['starSystem', 'characters']});
+    return await this.planetRepository.find({
+      relations: ['starSystem', 'characters'],
+    });
   }
 
   async findOneByIdOrFail(id: number) {
     try {
-      return await this.planetRepository.findOneOrFail({ where: { id: id }, relations: ['starSystem', 'characters'], });
+      return await this.planetRepository.findOneOrFail({
+        where: { id: id },
+        relations: ['starSystem', 'characters'],
+      });
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         const message: string = `Planet with ID ${id} not found`;
@@ -49,8 +58,9 @@ export class PlanetsService {
     try {
       await this.planetRepository.delete({ id: id });
     } catch (error) {
-      if (error.message.includes('FOREIGN KEY constraint failed')){
-        const message: string = 'Cannot delete the planet because it is linked to one or more characters. Please remove the characters first.';
+      if (error.message.includes('FOREIGN KEY constraint failed')) {
+        const message: string =
+          'Cannot delete the planet because it is linked to one or more characters. Please remove the characters first.';
         throw new BadRequestException(message);
       }
 

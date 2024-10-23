@@ -25,7 +25,8 @@ export class CharacterController {
 
   @Post()
   @ApiOperation({
-    summary: 'Creates a new character and links them to a home planet via homePlanetId',
+    summary:
+      'Creates a new character and links them to a home planet via homePlanetId',
   })
   async create(@Body() createCharacterDto: CreateCharacterDto) {
     return await this.characterService.create(createCharacterDto);
@@ -41,7 +42,8 @@ export class CharacterController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Retrieves a specific character by their id, including their details and home planet.',
+    summary:
+      'Retrieves a specific character by their id, including their details and home planet.',
   })
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return await this.characterService.findOneByIdOrFail(id);
@@ -49,7 +51,8 @@ export class CharacterController {
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Updates an existing character by their id. Optionally, you can update the character\'s home planet.',
+    summary:
+      "Updates an existing character by their id. Optionally, you can update the character's home planet.",
   })
   async update(
     @Param('id', new ParseIntPipe()) id: number,

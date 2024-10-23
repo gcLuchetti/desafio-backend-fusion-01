@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,9 +16,10 @@ import { CharacterNotFound } from './exceptions/character-not-found.exception';
 @Injectable()
 export class CharacterService {
   constructor(
-    @InjectRepository(Character) private readonly characterRepository: Repository<Character>,
+    @InjectRepository(Character)
+    private readonly characterRepository: Repository<Character>,
     @Inject() private readonly planetService: PlanetsService,
-){}
+  ) {}
 
   async create(createCharacterDto: CreateCharacterDto) {
     const { homePlanetId, ...characterData } = createCharacterDto;
@@ -33,7 +39,7 @@ export class CharacterService {
   }
 
   async findAll() {
-    return await this.characterRepository.find({relations: ['homePlanet']});
+    return await this.characterRepository.find({ relations: ['homePlanet'] });
   }
 
   async findOneByIdOrFail(id: number) {
@@ -71,9 +77,10 @@ export class CharacterService {
     await this.characterRepository.delete({ id: id });
   }
 
-  private async fetchPlanet(homePlanetId: number){
+  private async fetchPlanet(homePlanetId: number) {
     if (homePlanetId) {
-      const planet: Planet = await this.planetService.findOneByIdOrFail(homePlanetId);
+      const planet: Planet =
+        await this.planetService.findOneByIdOrFail(homePlanetId);
       return planet;
     }
   }
