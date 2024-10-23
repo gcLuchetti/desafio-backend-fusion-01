@@ -60,7 +60,6 @@ export class AuthService {
 
     const signInAccess: ResultAuthDto = {
       accessToken: accessToken,
-      userId: user.userId,
       email: user.email,
     };
 
