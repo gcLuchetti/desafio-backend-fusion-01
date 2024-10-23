@@ -33,12 +33,13 @@ export class Planet {
 
   @ManyToOne(() => StarSystem, (starSystem) => starSystem.planets, {
     nullable: true,
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE',
   })
   starSystem: StarSystem;
 
   @OneToMany(() => Character, (character) => character.homePlanet, {
     nullable: true,
+    onDelete: 'SET NULL',
   })
   characters: Character[];
 
