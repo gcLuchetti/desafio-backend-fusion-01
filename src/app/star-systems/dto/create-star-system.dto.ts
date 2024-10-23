@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsInt,
@@ -10,15 +11,18 @@ import {
 export class CreateStarSystemDto {
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   name: string;
 
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   description: string;
 
   @IsArray()
   @IsOptional()
   @IsInt({ each: true })
   @Min(1, { each: true })
+  @ApiProperty({ required: false, type: [Number], })
   planetIds?: number[];
 }

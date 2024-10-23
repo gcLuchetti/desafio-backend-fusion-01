@@ -16,6 +16,6 @@ export class CreatePlanetDto {
 
   @IsNumber()
   @Min(0)
-  @ApiProperty()
+  @ApiProperty({ type: [Number], })
   population: number;
 }
