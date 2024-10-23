@@ -21,7 +21,7 @@ export class StarSystem {
   @Column({ nullable: false })
   description: string;
 
-  @OneToMany(() => Planet, (planet) => planet.starSystem, { nullable: true })
+  @OneToMany(() => Planet, (planet) => planet.starSystem, { nullable: true, onDelete: 'SET NULL' })
   planets: Planet[];
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
