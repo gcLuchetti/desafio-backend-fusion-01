@@ -29,7 +29,9 @@ export class Planet {
   @Column({ nullable: false })
   population: number;
 
-  @ManyToOne(() => StarSystem, (starSystem) => starSystem.planets, { nullable: true })
+  @ManyToOne(() => StarSystem, (starSystem) => starSystem.planets, {
+    nullable: true,
+  })
   starSystem: StarSystem;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
