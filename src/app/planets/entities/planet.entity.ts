@@ -1,3 +1,4 @@
+import { Character } from 'src/app/character/entities/character.entity';
 import { StarSystem } from 'src/app/star-systems/entities/star-system.entity';
 import {
   BeforeInsert,
@@ -6,6 +7,7 @@ import {
   Entity,
   Index,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -33,6 +35,11 @@ export class Planet {
     nullable: true,
   })
   starSystem: StarSystem;
+
+  @OneToMany(() => Character, (character) => character.homePlanet, {
+    nullable: true,
+  })
+  characters: Character[];
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
