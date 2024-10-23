@@ -23,6 +23,6 @@ export class CreateStarSystemDto {
   @IsOptional()
   @IsInt({ each: true })
   @Min(1, { each: true })
-  @ApiProperty({ required: false, type: [Number], })
+  @ApiProperty({ required: false, type: [Number] })
   planetIds?: number[];
 }

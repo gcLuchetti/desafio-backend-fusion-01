@@ -5,6 +5,7 @@ import { UsersModule } from './app/users/users.module';
 import { AuthModule } from './app/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { StarSystemsModule } from './app/star-systems/star-systems.module';
+import { CharacterModule } from './app/character/character.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,6 +22,7 @@ import { StarSystemsModule } from './app/star-systems/star-systems.module';
     UsersModule,
     AuthModule,
     StarSystemsModule,
+    CharacterModule,
   ],
   controllers: [],
   providers: [],
