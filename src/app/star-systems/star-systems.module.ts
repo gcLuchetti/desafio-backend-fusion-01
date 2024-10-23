@@ -4,10 +4,9 @@ import { StarSystemsController } from './star-systems.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StarSystem } from './entities/star-system.entity';
 import { PlanetsModule } from '../planets/planets.module';
-import { Planet } from '../planets/entities/planet.entity';
 
 @Module({
-  imports: [PlanetsModule, TypeOrmModule.forFeature([StarSystem, Planet])],
+  imports: [PlanetsModule, TypeOrmModule.forFeature([StarSystem])],
   controllers: [StarSystemsController],
   providers: [StarSystemsService],
   exports: [StarSystemsService],
