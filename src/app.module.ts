@@ -6,6 +6,7 @@ import { AuthModule } from './app/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { StarSystemsModule } from './app/star-systems/star-systems.module';
 import { CharacterModule } from './app/character/character.module';
+import { SpaceshipsModule } from './app/spaceships/spaceships.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,6 +24,7 @@ import { CharacterModule } from './app/character/character.module';
     AuthModule,
     StarSystemsModule,
     CharacterModule,
+    SpaceshipsModule,
   ],
   controllers: [],
   providers: [],
