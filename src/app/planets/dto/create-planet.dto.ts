@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, Min } from 'class-validator';
 
 export class CreatePlanetDto {
   @IsNotEmpty()
@@ -15,7 +15,7 @@ export class CreatePlanetDto {
   terrain: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsInt()
   @Min(0)
   @ApiProperty({ type: [Number] })
   population: number;

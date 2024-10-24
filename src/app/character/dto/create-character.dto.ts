@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-} from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 
 export class CreateCharacterDto {
   @IsNotEmpty()
@@ -24,7 +18,7 @@ export class CreateCharacterDto {
   affiliation: string;
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
   @Min(1)
   @ApiProperty({ type: Number })
   homePlanetId: number;
