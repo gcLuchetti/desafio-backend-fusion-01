@@ -56,7 +56,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NOT_FOUND)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Removes a user from the system.',
   })
