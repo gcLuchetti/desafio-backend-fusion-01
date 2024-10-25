@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { PlanetsModule } from './app/planets/planets.module';
 import { UsersModule } from './app/users/users.module';
 import { AuthModule } from './app/auth/auth.module';
@@ -7,6 +7,7 @@ import { StarSystemsModule } from './app/star-systems/star-systems.module';
 import { CharacterModule } from './app/character/character.module';
 import { SpaceshipsModule } from './app/spaceships/spaceships.module';
 import { DatabaseModule } from './database/database.module';
+import { LoggerMiddleware } from './app/logger.middleware';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,4 +24,10 @@ import { DatabaseModule } from './database/database.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes('*');
+  }
+}
