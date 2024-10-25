@@ -22,10 +22,10 @@ export class UsersService {
         this.usersRepository.create(createUserDto),
       );
     } catch (error) {
-      if (error.message.includes('UNIQUE constraint failed: users.email'))
+      if (error.detail && error.detail.includes('already exists'))
         throw new BadRequestException('A user with this email already exists.');
 
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(error.detail);
     }
   }
 

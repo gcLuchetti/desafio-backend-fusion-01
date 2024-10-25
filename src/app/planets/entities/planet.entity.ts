@@ -28,7 +28,7 @@ export class Planet {
   @Column({ nullable: false })
   terrain: string;
 
-  @Column({ nullable: false })
+  @Column('bigint', { nullable: false })
   population: number;
 
   @ManyToOne(() => StarSystem, (starSystem) => starSystem.planets, {

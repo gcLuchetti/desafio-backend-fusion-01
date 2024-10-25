@@ -22,7 +22,7 @@ export class Spaceship {
   @Column({ nullable: false })
   manufacturer: string;
 
-  @Column({ nullable: false, type: 'int' })
+  @Column('int', { nullable: false })
   passengerCapacity: number;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
