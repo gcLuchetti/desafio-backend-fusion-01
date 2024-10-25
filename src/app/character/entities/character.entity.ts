@@ -26,7 +26,7 @@ export class Character {
 
   @ManyToOne(() => Planet, (planet) => planet.characters, {
     nullable: true,
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
   })
   homePlanet: Planet;
 
